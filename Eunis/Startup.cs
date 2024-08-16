@@ -37,31 +37,31 @@ namespace Eunis {
             //var connectionString = Configuration.GetConnectionString("dbConectionString");
 
             //..testing
-           // var descrString = connectionString;
+            // var descrString = connectionString;
             //var connString = descrString;
 
             //..production
             //var descrString = Environment.GetEnvironmentVariable(connectionString);
             //if (descrString == null) {
-            //    logger.LogToFile($"ESB SERVICE:: URL Environmental variable '{connectionString}' not set", "CRITICAL");
-           // }
+            //    logger.LogToFile($"LOCAL SERVICE:: URL Environmental variable '{connectionString}' not set", "CRITICAL");
+            // }
 
             //var connString = encrypt.DecryptString(descrString, AppUtil.CredentialKey);
 
-            //services.AddDbContext<AbcDbContext>(o => o.UseSqlServer(connString));
-            //logger.LogToFile($"ESB Service Database connection string :: {connectionString}", "INFO");
+            //services.AddDbContext<EunisDbContext>(o => o.UseSqlServer(connString));
+            //logger.LogToFile($"LOCAL Service Database connection string :: {connectionString}", "INFO");
             //logger.LogToFile($"DB CONNECTION: {connString}");
-            //logger.LogToFile($"ESB SERVICE :: Connection to database established...", "INFO");
+            //logger.LogToFile($"LOCAL SERVICE :: Connection to database established...", "INFO");
 
             //..register repositories
             //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddScoped<IAbcRepository, AbcRepository>();
+            //services.AddScoped<IEunisRepository, EunisRepository>();
             //services.AddScoped<IBankRepository, BankRepository>();
             //services.AddScoped<ISettingRepository, SettingRepository>();
-            //services.AddScoped<IAbCredentialRepository, AbCredentialRepository>();
+            //services.AddScoped<IEunisCredentialRepository, EunisCredentialRepository>();
 
             //..register services
-            //services.AddScoped<IAbcService, AbcService>();
+            //services.AddScoped<IEuniService, EuniService>();
             //services.AddScoped<IBankService, BankService>();
             //services.AddScoped<ISettingService, SettingService>();
             //services.AddScoped<ICredentialService, CredentialService>();

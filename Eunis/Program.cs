@@ -1,17 +1,23 @@
-var builder = WebApplication.CreateBuilder(args);
+using Eunis;
+using System.Diagnostics;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions {
+    Args = args,
+    ContentRootPath = AppContext.BaseDirectory,
+    ApplicationName = Process.GetCurrentProcess().ProcessName
+});
 
-builder.Services.AddControllers();
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+// Create and configure the startup class
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+startup.Configure(app);
 
 app.Run();
+
+
