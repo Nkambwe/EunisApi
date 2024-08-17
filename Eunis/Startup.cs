@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Eunis.Helpers;
+using Eunis.Infrastructure.Data;
+using Eunis.Infrastructure.Repositories;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eunis {
 
@@ -34,71 +37,65 @@ namespace Eunis {
             logger.LogToFile("EUNIS SERVICE :: Service started....");
 
             //..db connection
-            //var connectionString = Configuration.GetConnectionString("dbConectionString");
+            var configValue = Configuration.GetConnectionString("dbConectionString");
+            var envValue = Utils.IsLive ? 
+                Environment.GetEnvironmentVariable(configValue):
+                configValue;
 
-            //..testing
-            // var descrString = connectionString;
-            //var connString = descrString;
+            if (string.IsNullOrWhiteSpace(envValue)) {
+                var connectionString = Secure.DecryptString(envValue, Utils.PassKey);
+                logger.LogToFile($"DATA CONNECTION :: Eunis Connection string :: {connectionString}", "INFO");
+                services.AddDbContext<EunisDbContext>(o => o.UseNpgsql(connectionString));
+                logger.LogToFile($"LOCAL SERVICE :: Connection to database established...", "INFO");
 
-            //..production
-            //var descrString = Environment.GetEnvironmentVariable(connectionString);
-            //if (descrString == null) {
-            //    logger.LogToFile($"LOCAL SERVICE:: URL Environmental variable '{connectionString}' not set", "CRITICAL");
-            // }
+                //..register repositories
+                services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+                //services.AddScoped<IBankRepository, BankRepository>();
+                //services.AddScoped<ISettingRepository, SettingRepository>();
+                //services.AddScoped<IEunisCredentialRepository, EunisCredentialRepository>();
 
-            //var connString = encrypt.DecryptString(descrString, AppUtil.CredentialKey);
+                //..register services
+                //services.AddScoped<IEuniService, EuniService>();
+                //services.AddScoped<IBankService, BankService>();
+                //services.AddScoped<ISettingService, SettingService>();
+                //services.AddScoped<ICredentialService, CredentialService>();
 
-            //services.AddDbContext<EunisDbContext>(o => o.UseSqlServer(connString));
-            //logger.LogToFile($"LOCAL Service Database connection string :: {connectionString}", "INFO");
-            //logger.LogToFile($"DB CONNECTION: {connString}");
-            //logger.LogToFile($"LOCAL SERVICE :: Connection to database established...", "INFO");
+                // Mappers
+                services.AddAutoMapper(m => m.AddProfile(new MappingProfile()));
 
-            //..register repositories
-            //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddScoped<IEunisRepository, EunisRepository>();
-            //services.AddScoped<IBankRepository, BankRepository>();
-            //services.AddScoped<ISettingRepository, SettingRepository>();
-            //services.AddScoped<IEunisCredentialRepository, EunisCredentialRepository>();
+                //..add Client service connection
+                logger.LogToFile("EUNIS SERVICE :: Registering External Client URL...", "INFO");
+                var thirdPartyUrl = Configuration.GetValue<string>("ThirdPartyUrl");
+                string envPValue = thirdPartyUrl;
+                if (Utils.IsLive) {
+                    //Environmental variable set
+                    envPValue = Environment.GetEnvironmentVariable(thirdPartyUrl);
+                }
 
-            //..register services
-            //services.AddScoped<IEuniService, EuniService>();
-            //services.AddScoped<IBankService, BankService>();
-            //services.AddScoped<ISettingService, SettingService>();
-            //services.AddScoped<ICredentialService, CredentialService>();
+                if (!string.IsNullOrWhiteSpace(envValue)) {
+                    var connectionUrl = Secure.DecryptString(envPValue, Utils.PassKey);
+                    logger.LogToFile($"EXTERNAL SERVICE URL STRING: {connectionUrl}");
+                    services.AddHttpClient("ThirdPartyLink", c => {
+                        c.BaseAddress = new Uri(connectionUrl);
+                    });
+                } else {
+                    logger.LogToFile($"EXTERNAL SERVICE:: URL Environmental variable '{thirdPartyUrl}' not set", "SYSTEM ERROR");
+                }
+                
+                //..add Auto Mapper Configurations
+                var mappingConfig = new MapperConfiguration(mc => {
+                    mc.AddProfile(new MappingProfile());
+                });
 
-            //..add ABC client
-            logger.LogToFile("EUNIS SERVICE :: Registering External Client URL...", "INFO");
-
-            //var extUrl = Configuration.GetValue<string>("AbcUrl");
-
-            //..test
-            //var descrExtUrl = extUrl;
-            //var extUrlString = descrExtUrl;
-
-            //..production
-            //var descrExtUrl = Environment.GetEnvironmentVariable(extUrlString);
-            //if (descrExtUrl == null) {
-            //    logger.LogToFile($"ABC SERVICE:: Eunis Connection string Environmental variable '{extUrlString}' not set", "CRITICAL");
-            //}
-
-            //var extUrlString = encrypt.DecryptString(descrExtUrl, AppUtil.CredentialKey);
-            //logger.LogToFile($"EXTERNAL URL STRING: {extUrlString}");
-            //services.AddHttpClient("PbuAbcLink", c => {
-            //    c.BaseAddress = new Uri(extUrlString);
-            //});
-
-            //..add Auto Mapper Configurations
-            var mappingConfig = new MapperConfiguration(mc => {
-                mc.AddProfile(new MappingProfile());
-            });
-
-            logger.LogToFile("EUNIS SERVICE :: Registering mappers...", "INFO");
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
-            logger.LogToFile("EUNIS SERVICE :: Registering Http Content Accessor...", "INFO");
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            logger.LogToFile("EUNIS SERVICE :: Service Started...");
+                IMapper mapper = mappingConfig.CreateMapper();
+                services.AddSingleton(mapper);
+                services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                logger.LogToFile("EUNIS SERVICE :: Service Started...");
+            } else {
+                logger.LogToFile($"EUNIS SERVICE:: URL Environmental variable '{configValue}' not set. Database connection cannot be established", "CRITICAL");
+                logger.LogToFile("Service connection stopped...");
+            }
+            
         }
 
         /// <summary>

@@ -1,0 +1,12 @@
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Eunis.Infrastructure.Data.Models.Configuration {
+    public class SettingsEntityConfiguration {
+        public static void Configure(EntityTypeBuilder<Settings> entityBuilder) {
+            entityBuilder.HasKey(l => l.Id);
+            entityBuilder.Property(l => l.PostedOn).IsRequired();
+            entityBuilder.Property(l => l.ParamName).HasMaxLength(225).IsRequired();
+            entityBuilder.Property(l => l.ParamName).HasMaxLength(225).IsRequired();
+        }
+    }
+}
