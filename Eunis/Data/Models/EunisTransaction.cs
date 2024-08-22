@@ -1,6 +1,8 @@
-﻿namespace Eunis.Infrastructure.Data.Models {
+﻿namespace Eunis.Data.Models
+{
 
-    public class EunisTransaction : DomainEntity {
+    public class EunisTransaction : DomainEntity
+    {
         public string RequestType { get; set; }
         public long CredentialsId { get; set; }
         public string ClientId { get; set; }

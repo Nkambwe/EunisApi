@@ -1,7 +1,7 @@
-﻿namespace Eunis.Infrastructure.Repositories {
-    public interface ICredentialsRepository {
-    }
+﻿using Eunis.Data.Models;
 
-    public class CredentialsRepository : ICredentialsRepository {
+namespace Eunis.Infrastructure.Repositories
+{
+    public interface ICredentialsRepository : IRepository<Credentials> {
     }
 }

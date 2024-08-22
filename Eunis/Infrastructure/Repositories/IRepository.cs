@@ -1,7 +1,8 @@
-﻿using Eunis.Infrastructure.Data.Models;
+﻿using Eunis.Data.Models;
 using System.Linq.Expressions;
 
-namespace Eunis.Infrastructure.Repositories {
+namespace Eunis.Infrastructure.Repositories
+{
     public interface IRepository<T> where T : DomainEntity {
         T Get(long id);
         Task<T> GetAsync(long id);

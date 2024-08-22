@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Eunis.Data;
+using Eunis.Data.Models;
 using Eunis.Helpers;
-using Eunis.Infrastructure.Data;
 using Eunis.Infrastructure.Repositories;
+using Eunis.Infrastructure.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +33,14 @@ namespace Eunis {
             //..swagger
             services.AddSwaggerGen();
 
+            //services.AddCors(options => {
+            //    options.AddPolicy("AllowSpecificOrigin", builder => {
+            //        builder.WithOrigins(new string[] {"10.129.2.16"})
+            //               .AllowAnyHeader()
+            //               .AllowAnyMethod();
+            //    });
+            //});
+
             //..logging
             services.AddScoped<IServiceLogger, ServiceLogger>();
             ServiceLogger logger = new();
@@ -42,23 +52,23 @@ namespace Eunis {
                 Environment.GetEnvironmentVariable(configValue):
                 configValue;
 
-            if (string.IsNullOrWhiteSpace(envValue)) {
+            if (!string.IsNullOrWhiteSpace(envValue)) {
                 var connectionString = Secure.DecryptString(envValue, Utils.PassKey);
                 logger.LogToFile($"DATA CONNECTION :: Eunis Connection string :: {connectionString}", "INFO");
                 services.AddDbContext<EunisDbContext>(o => o.UseNpgsql(connectionString));
+
                 logger.LogToFile($"LOCAL SERVICE :: Connection to database established...", "INFO");
 
                 //..register repositories
                 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-                //services.AddScoped<IBankRepository, BankRepository>();
-                //services.AddScoped<ISettingRepository, SettingRepository>();
-                //services.AddScoped<IEunisCredentialRepository, EunisCredentialRepository>();
+                services.AddScoped<ICredentialsRepository, CredentialsRepository>();
+                services.AddScoped<ISettingsRepository, SettingsRepository>();
+                services.AddScoped<ITransactionRepository, TransactionRepository>();
 
                 //..register services
-                //services.AddScoped<IEuniService, EuniService>();
-                //services.AddScoped<IBankService, BankService>();
-                //services.AddScoped<ISettingService, SettingService>();
-                //services.AddScoped<ICredentialService, CredentialService>();
+                services.AddScoped<ICredentialService, CredentialService>();
+                services.AddScoped<ISettingService, SettingService>();
+                services.AddScoped<ITransactionService, TransactionService>();
 
                 // Mappers
                 services.AddAutoMapper(m => m.AddProfile(new MappingProfile()));

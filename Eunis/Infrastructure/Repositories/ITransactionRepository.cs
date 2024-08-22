@@ -1,10 +1,9 @@
-﻿namespace Eunis.Infrastructure.Repositories {
+﻿using Eunis.Data.Models;
 
-    public interface ITransactionRepository {
+namespace Eunis.Infrastructure.Repositories
+{
 
-    }
-
-    public class TransactionRepository : ITransactionRepository {
+    public interface ITransactionRepository : IRepository<EunisTransaction> {
 
     }
 }

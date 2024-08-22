@@ -1,8 +1,9 @@
-﻿using Eunis.Infrastructure.Data.Models;
+﻿using Eunis.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Eunis.Infrastructure.Repositories {
+namespace Eunis.Infrastructure.Repositories
+{
     public class Repository<T> : IRepository<T> where T : DomainEntity {
 
         private readonly DbContext _context;
@@ -83,6 +84,17 @@ namespace Eunis.Infrastructure.Repositories {
             _entities.Remove(entity);
             await _context.SaveChangesAsync();
         }
+
+        //public void Delete(Expression<Func<T, bool>> expression)
+        //    => _entities.Where(expression).ExecuteDelete();
+
+        //public async Task DeleteAsync(Expression<Func<T, bool>> expression) {
+        //    if (entity == null) {
+        //        throw new ArgumentNullException(nameof(entity));
+        //    }
+        //    _entities.Remove(entity);
+        //    await _context.SaveChangesAsync();
+        //}
 
         public bool Exists(Expression<Func<T, bool>> expression)
             => _entities.FirstOrDefault(expression) != null;

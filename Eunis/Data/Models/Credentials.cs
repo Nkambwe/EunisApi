@@ -1,5 +1,7 @@
-﻿namespace Eunis.Infrastructure.Data.Models {
-    public class Credentials : DomainEntity {
+﻿namespace Eunis.Data.Models
+{
+    public class Credentials : DomainEntity
+    {
         public string ClientId { get; set; }
         public string Code { get; set; }
         public string Username { get; set; }

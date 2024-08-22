@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Eunis.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Eunis.Infrastructure.Data.Models.Configuration {
-    public class EunisTransactionEntityConfiguration {
-        public static void Configure(EntityTypeBuilder<EunisTransaction> entityBuilder) {
+namespace Eunis.Data.Models.Configuration
+{
+    public class EunisTransactionEntityConfiguration
+    {
+        public static void Configure(EntityTypeBuilder<EunisTransaction> entityBuilder)
+        {
             entityBuilder.ToTable("Transactions");
             entityBuilder.HasKey(t => t.Id);
             entityBuilder.HasOne(t => t.Client).WithMany(e => e.Transactions).HasForeignKey(l => l.CredentialsId);
@@ -21,7 +25,7 @@ namespace Eunis.Infrastructure.Data.Models.Configuration {
             entityBuilder.Property(t => t.StatusCode).HasMaxLength(10).IsRequired();
             entityBuilder.Property(t => t.VendorReference).HasMaxLength(20).IsRequired();
             entityBuilder.Property(t => t.VendorMessage).HasMaxLength(225).IsRequired();
-            
+
         }
     }
 }
