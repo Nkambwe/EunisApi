@@ -1,13 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Eunis.Api {
-    public class RequestData {
-        [Required(ErrorMessage = "RequestId is required.")]
-        public string RequestId { get; set; }
-
-        [Required(ErrorMessage = "Agent ShortCode is required.")]
-        public string ShortCode { get; set; }
-
+    public class TransactionRequest : RequestBase {
+        
         [Required(ErrorMessage = "Amount is required.")]
         public string Amount { get; set; }
 
@@ -18,7 +13,7 @@ namespace Eunis.Api {
         public string MsisDn { get; set; }
 
         [Required(ErrorMessage = "Narration is required.")]
-        public string narration { get; set; }
+        public string Narration { get; set; }
 
         [Required(ErrorMessage = "Network is required.")]
         public string Network { get; set; }

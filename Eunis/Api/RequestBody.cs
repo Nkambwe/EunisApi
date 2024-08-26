@@ -2,7 +2,7 @@
 
 namespace Eunis.Api {
 
-    public class EunisRequest {
+    public class RequestBody {
         [Required(ErrorMessage = "ClientId is required.")]
         public string ClientId { get; set; }
 
@@ -10,7 +10,7 @@ namespace Eunis.Api {
         public string Action { get; set; }
 
         [Required(ErrorMessage = "Data is required.")]
-        public RequestData RequestData { get; set; }
+        public TransactionRequest RequestData { get; set; }
     }
 
 }

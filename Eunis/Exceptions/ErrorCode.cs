@@ -5,5 +5,8 @@
         public const int InvalidAmount = 1003;
         public const int InvalidCurrency = 1004;
         public const int CurrencyMismatch = 1005;
+        public const int SystemError = 500;
+        public const int ClientError = 400;
+        public const int UnauthorizedError = 401;
     }
 }

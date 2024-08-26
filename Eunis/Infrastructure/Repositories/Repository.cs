@@ -39,62 +39,65 @@ namespace Eunis.Infrastructure.Repositories
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> expression)
              => await _entities.Where(expression).ToListAsync();
 
-        public void Insert(T entity) {
+        public bool Insert(T entity) {
             if (entity == null) {
                 throw new ArgumentNullException(nameof(entity));
             }
             _entities.Add(entity);
-            _context.SaveChanges();
+           return _context.SaveChanges() > 0;
         }
 
-        public async Task InsertAsync(T entity) {
+        public async Task<bool> InsertAsync(T entity) {
             if (entity == null) {
                 throw new ArgumentNullException(nameof(entity));
             }
             await _entities.AddAsync(entity);
-            await _context.SaveChangesAsync();
+           return await _context.SaveChangesAsync() > 0;
         }
 
-        public void Update(T entity) {
+        public bool Update(T entity) {
             if (entity == null) {
                 throw new ArgumentNullException(nameof(entity));
             }
-            _context.SaveChanges();
+           return _context.SaveChanges() > 0;
         }
 
-        public async Task UpdateAsync(T entity) {
+        public async Task<bool> UpdateAsync(T entity) {
             if (entity == null) {
                 throw new ArgumentNullException(nameof(entity));
             }
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public void Delete(T entity) {
-            if (entity == null) {
-                throw new ArgumentNullException(nameof(entity));
-            }
-            _entities.Remove(entity);
-            _context.SaveChanges();
-        }
+        //public async Task UpdateCredentialAsync(Expression<Func<T, bool>> expression, bool isActive) {
+        //    var affectedRows = await _entities.Where(expression)
+        //         .ExecuteUpdateAsync(updates =>
+        //    updates.SetProperty(p => p.IsActive, isActive));
 
-        public async Task DeleteAsync(T entity) {
-            if (entity == null) {
-                throw new ArgumentNullException(nameof(entity));
-            }
-            _entities.Remove(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        //public void Delete(Expression<Func<T, bool>> expression)
-        //    => _entities.Where(expression).ExecuteDelete();
-
-        //public async Task DeleteAsync(Expression<Func<T, bool>> expression) {
-        //    if (entity == null) {
-        //        throw new ArgumentNullException(nameof(entity));
-        //    }
-        //    _entities.Remove(entity);
-        //    await _context.SaveChangesAsync();
+        //    return affectedRows == 0 ? Results.NotFound() : Results.NoContent();
         //}
+
+        public bool Delete(T entity) {
+            if (entity == null) {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            _entities.Remove(entity);
+            return _context.SaveChanges() > 0;
+        }
+
+        public async Task<bool> DeleteAsync(T entity) {
+            if (entity == null) {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            _entities.Remove(entity);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public bool Delete(Expression<Func<T, bool>> expression)
+            => _entities.Where(expression).ExecuteDelete() > 0;
+
+        public async Task<bool> DeleteAsync(Expression<Func<T, bool>> expression)
+             => await _entities.Where(expression).ExecuteDeleteAsync() > 0;
 
         public bool Exists(Expression<Func<T, bool>> expression)
             => _entities.FirstOrDefault(expression) != null;

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "adDoa4dei15LXuglMtJOOo33XL/4gsUp5MZhcq6Q88NpS8pFKICjBY0MttnPeQ1anKEE3/ar75cXa5lBqPJebg==",
+  "dgSpecHash": "XCtqIYtHop+SMtRJkG5CG5S34/gVDQ6Epp/8mNaIG6fatWRd4bALXi9j7hnBdJfEadWQ2B9YljkLX0eWAQIYxg==",
   "success": true,
   "projectFilePath": "C:\\Projects\\CS\\Eunis\\EunisApi\\Eunis\\Eunis.csproj",
   "expectedPackageFiles": [
@@ -30,6 +30,7 @@
     "C:\\Users\\Mark.Nkambwe\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\Mark.Nkambwe\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Mark.Nkambwe\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
+    "C:\\Users\\Mark.Nkambwe\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Mark.Nkambwe\\.nuget\\packages\\npgsql\\7.0.7\\npgsql.7.0.7.nupkg.sha512",
     "C:\\Users\\Mark.Nkambwe\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.18\\npgsql.entityframeworkcore.postgresql.7.0.18.nupkg.sha512",
     "C:\\Users\\Mark.Nkambwe\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql.design\\1.1.0\\npgsql.entityframeworkcore.postgresql.design.1.1.0.nupkg.sha512",

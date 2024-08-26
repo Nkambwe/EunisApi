@@ -12,12 +12,14 @@ namespace Eunis.Infrastructure.Repositories
         Task<IList<T>> GetAllAsync();
         IList<T> GetAll(Expression<Func<T, bool>> expression);
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> expression);
-        void Insert(T entity);
-        Task InsertAsync(T entity);
-        void Update(T entity);
-        Task UpdateAsync(T entity);
-        void Delete(T entity);
-        Task DeleteAsync(T entity);
+        bool Insert(T entity);
+        Task<bool> InsertAsync(T entity);
+        bool Update(T entity);
+        Task<bool> UpdateAsync(T entity);
+        bool Delete(T entity);
+        Task<bool> DeleteAsync(T entity);
+        bool Delete(Expression<Func<T, bool>> expression);
+        Task<bool> DeleteAsync(Expression<Func<T, bool>> expression);
         bool Exists(Expression<Func<T, bool>> expression);
         Task<bool> ExistsAsync(Expression<Func<T, bool>> expression);
     }

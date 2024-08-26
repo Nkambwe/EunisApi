@@ -8,7 +8,7 @@ namespace Eunis.Data.Models.Configuration
     {
         public static void Configure(EntityTypeBuilder<EunisTransaction> entityBuilder)
         {
-            entityBuilder.ToTable("Transactions");
+            entityBuilder.ToTable("transactions");
             entityBuilder.HasKey(t => t.Id);
             entityBuilder.HasOne(t => t.Client).WithMany(e => e.Transactions).HasForeignKey(l => l.CredentialsId);
             entityBuilder.Property(t => t.CredentialsId).IsRequired();

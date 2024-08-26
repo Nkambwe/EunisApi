@@ -43,3 +43,4 @@ C:\Projects\CS\Eunis\EunisApi\Eunis\obj\Debug\net7.0\refint\Eunis.dll
 C:\Projects\CS\Eunis\EunisApi\Eunis\obj\Debug\net7.0\Eunis.pdb
 C:\Projects\CS\Eunis\EunisApi\Eunis\obj\Debug\net7.0\Eunis.genruntimeconfig.cache
 C:\Projects\CS\Eunis\EunisApi\Eunis\obj\Debug\net7.0\ref\Eunis.dll
+C:\Projects\CS\Eunis\EunisApi\Eunis\bin\Debug\net7.0\Newtonsoft.Json.dll
