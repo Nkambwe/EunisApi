@@ -3,7 +3,7 @@
 namespace Eunis.Infrastructure.Repositories
 {
 
-    public interface ITransactionRepository : IRepository<EunisTransaction> {
+    public interface ITransactionRepository : IRepository<EuniceTransaction> {
 
     }
 }

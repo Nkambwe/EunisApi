@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Eunis.Data;
-using Eunis.Data.Models;
 using Eunis.Helpers;
 using Eunis.Infrastructure.Repositories;
 using Eunis.Infrastructure.Services;
@@ -64,11 +63,15 @@ namespace Eunis {
                 services.AddScoped<ICredentialsRepository, CredentialsRepository>();
                 services.AddScoped<ISettingsRepository, SettingsRepository>();
                 services.AddScoped<ITransactionRepository, TransactionRepository>();
+                services.AddScoped<IClientRepository, ClientRepository>();
+                services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 
                 //..register services
                 services.AddScoped<ICredentialService, CredentialService>();
                 services.AddScoped<ISettingService, SettingService>();
                 services.AddScoped<ITransactionService, TransactionService>();
+                services.AddScoped<IClientService, ClientService>();
+                services.AddScoped<IBankAccountService, BankAccountService>();
 
                 // Mappers
                 services.AddAutoMapper(m => m.AddProfile(new MappingProfile()));

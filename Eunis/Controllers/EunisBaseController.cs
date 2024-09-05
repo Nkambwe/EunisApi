@@ -12,12 +12,12 @@ namespace Eunis.Controllers {
 
         public EunisBaseController(IMapper mapper, 
             IServiceLogger serviceLogger, 
-            ISettingService Settings,
+            ISettingService settings,
             ICredentialService credentials) {
             ServiceLogger = serviceLogger ?? throw new ArgumentNullException(nameof(serviceLogger));
             Mapper = mapper;
 
-            Settings = Settings ?? throw new ArgumentNullException(nameof(Settings));
+            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
             Settings.Adapter(mapper, serviceLogger);
 
             Credentials = credentials ?? throw new ArgumentNullException(nameof(credentials));

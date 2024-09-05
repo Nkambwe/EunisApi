@@ -11,11 +11,13 @@ namespace Eunis.Data {
         public EunisDbContext(DbContextOptions<EunisDbContext> options)
             : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             CredentialsEntityConfiguration.Configure(modelBuilder.Entity<Credentials>());
             SettingsEntityConfiguration.Configure(modelBuilder.Entity<Settings>());
-            EunisTransactionEntityConfiguration.Configure(modelBuilder.Entity<EunisTransaction>());
+            EunisTransactionEntityConfiguration.Configure(modelBuilder.Entity<EuniceTransaction>());
+            BankEntityConfiguration.Configure(modelBuilder.Entity<Bank>());
+            BankAccountEntityConfiguration.Configure(modelBuilder.Entity<BankAccount>());
+            ClientEntityConfiguration.Configure(modelBuilder.Entity<Client>());
 
             base.OnModelCreating(modelBuilder);
         }

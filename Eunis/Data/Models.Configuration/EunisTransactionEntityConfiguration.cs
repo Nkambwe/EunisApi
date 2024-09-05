@@ -1,13 +1,9 @@
-﻿using Eunis.Data.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Eunis.Data.Models.Configuration
-{
-    public class EunisTransactionEntityConfiguration
-    {
-        public static void Configure(EntityTypeBuilder<EunisTransaction> entityBuilder)
-        {
+namespace Eunis.Data.Models.Configuration {
+    public class EunisTransactionEntityConfiguration {
+        public static void Configure(EntityTypeBuilder<EuniceTransaction> entityBuilder) {
             entityBuilder.ToTable("transactions");
             entityBuilder.HasKey(t => t.Id);
             entityBuilder.HasOne(t => t.Client).WithMany(e => e.Transactions).HasForeignKey(l => l.CredentialsId);

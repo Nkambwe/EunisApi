@@ -4,23 +4,25 @@ using System.Linq.Expressions;
 namespace Eunis.Infrastructure.Repositories
 {
     public interface IRepository<T> where T : DomainEntity {
-        T Get(long id);
-        Task<T> GetAsync(long id);
-        T Get(Expression<Func<T, bool>> expression);
-        Task<T> GetAsync(Expression<Func<T, bool>> expression);
-        IList<T> GetAll();
-        Task<IList<T>> GetAllAsync();
-        IList<T> GetAll(Expression<Func<T, bool>> expression);
-        Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> expression);
-        bool Insert(T entity);
-        Task<bool> InsertAsync(T entity);
-        bool Update(T entity);
-        Task<bool> UpdateAsync(T entity);
-        bool Delete(T entity);
-        Task<bool> DeleteAsync(T entity);
-        bool Delete(Expression<Func<T, bool>> expression);
-        Task<bool> DeleteAsync(Expression<Func<T, bool>> expression);
-        bool Exists(Expression<Func<T, bool>> expression);
-        Task<bool> ExistsAsync(Expression<Func<T, bool>> expression);
+        public T Get(long id);
+        public Task<T> GetAsync(long id);
+        public T Get(Expression<Func<T, bool>> expression);
+        public Task<T> GetAsync(Expression<Func<T, bool>> expression);
+        public T Get(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes);
+        public Task<T> GetAsync(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes);
+        public IList<T> GetAll();
+        public Task<IList<T>> GetAllAsync();
+        public IList<T> GetAll(Expression<Func<T, bool>> expression);
+        public Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> expression);
+        public bool Insert(T entity);
+        public Task<bool> InsertAsync(T entity);
+        public bool Update(T entity);
+        public Task<bool> UpdateAsync(T entity);
+        public bool Delete(T entity);
+        public Task<bool> DeleteAsync(T entity);
+        public bool Delete(Expression<Func<T, bool>> expression);
+        public Task<bool> DeleteAsync(Expression<Func<T, bool>> expression);
+        public bool Exists(Expression<Func<T, bool>> expression);
+        public Task<bool> ExistsAsync(Expression<Func<T, bool>> expression);
     }
 }

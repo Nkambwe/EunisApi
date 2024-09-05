@@ -1,8 +1,6 @@
-﻿namespace Eunis.Data.Models
-{
+﻿namespace Eunis.Data.Models {
 
-    public class Settings : DomainEntity
-    {
+    public class Settings : DomainEntity{
         public string ParamName { get; set; }
         public string ParamValue { get; set; }
     }

@@ -55,5 +55,17 @@ namespace Eunis.Helpers {
             using StreamReader srDecrypt = new(csDecrypt);
             return srDecrypt.ReadToEnd();
         }
+        /// <summary>
+        /// Verify API signature
+        /// </summary>
+        /// <param name="payload"></param>
+        /// <param name="signature"></param>
+        /// <param name="publicKey"></param>
+        /// <returns></returns>
+        public static bool VerifySignature(string payload, string signature, RSA publicKey) {
+            byte[] data = Encoding.UTF8.GetBytes(payload);
+            byte[] sig = Convert.FromBase64String(signature);
+            return publicKey.VerifyData(data, sig, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        }
     }
 }

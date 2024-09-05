@@ -26,6 +26,24 @@ namespace Eunis.Infrastructure.Repositories
         public async Task<T> GetAsync(Expression<Func<T, bool>> expression)
             => await _entities.FirstOrDefaultAsync(expression);
 
+        public T Get(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes) {
+            IQueryable<T> query = _entities;
+
+            if (includes.Any()) {
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            }
+            
+            return query.FirstOrDefault(expression);
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes) {
+            IQueryable<T> query = _entities;
+            if (includes.Any()) {
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            }
+            return await query.FirstOrDefaultAsync(expression);
+        }
+
         public IList<T> GetAll()
             => _entities.ToList();
 
